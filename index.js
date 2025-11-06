@@ -7,6 +7,7 @@ const secret_key = "lata12345";
 const app = express();
 
 app.use("/api/v1/user",userRouter);
+app.use("/api/v1/admin",adminRouter);
 app.use("/api/v1/course",courseRouter);
 
 app.listen(3000, function () {

@@ -6,7 +6,7 @@ userRouter.post("/signup", function (req, res) {
         message: "successfully signup"
     })
 })
-userRouter.post("/login", function (req, req) {
+userRouter.post("/login", function (req, res) {
     res.json({
         message: "successfully login"
     })
