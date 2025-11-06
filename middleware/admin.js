@@ -10,7 +10,7 @@ function adminAuthMiddleware(req, res, next) {
         if (err) {
             return res.status(401).json({ message: "Invalid token." });
         }
-        req.admin = decoded;
+        req.userId = decoded.id;
         next();
     });
 }
