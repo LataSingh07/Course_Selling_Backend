@@ -3,12 +3,6 @@ const { Schema, Types } = mongoose;
 
 console.log("Connecting to MongoDB...");
 
-
-mongoose.connect(
-  "mongodb+srv://lataSingh:kqstfFLEUPcETkpD@cluster0.adatax7.mongodb.net/course_selling_website")
-.then(() => console.log(" Connected to MongoDB"))
-.catch((err) => console.error(" MongoDB connection error:", err));
-
 const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
