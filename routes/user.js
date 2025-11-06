@@ -47,8 +47,22 @@ userRouter.post("/login", async function (req, res) {
     }
 })
 userRouter.get("/purchases", async function (req, res) {
+    const userId = req.userId;
+    const purchases = await PurchaseModel.find({
+         userId: userId 
+        });
     res.json({
-        message: "user purchases endpoint"
+        message: "user purchases endpoint",
+        userId: userId,
+        purchases: purchases
+    })
+})
+userRouter.get("/profile", userAuthMiddleware, async function (req, res) {
+    const userId = req.userId;
+    const user = await UserModel.findById(userId);
+    res.json({
+        message: "user profile endpoint",
+        user: user
     })
 })
 
