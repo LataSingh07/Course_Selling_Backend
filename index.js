@@ -1,9 +1,10 @@
 const express = require("express");
 const {userRouter} = require("./routes/user");
 const {courseRouter} = require("./routes/course");
+const {adminRouter} = require("./routes/admin");
 const jsonwebtoken = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const secret_key = "lata12345";
+
+
 const app = express();
 
 app.use("/api/v1/user",userRouter);
