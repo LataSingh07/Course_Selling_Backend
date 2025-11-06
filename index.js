@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const dotenv = require("dotenv");
+dotenv.config();
+console.log("Environment Variables:", process.env.MONGO_URL, process.env.JWT_ADMIN_PASSWORD, process.env.JWT_USER_PASSWORD);
 
 const {userRouter} = require("./routes/user");
 const {courseRouter} = require("./routes/course");
@@ -14,7 +16,7 @@ app.use("/api/v1/admin",adminRouter);
 app.use("/api/v1/course",courseRouter);
 
 async function main() {
-    await mongoose.connect("mongodb+srv://lataSingh:kqstfFLEUPcETkpD@cluster0.adatax7.mongodb.net/course_selling_website");
+    await mongoose.connect(process.env.MONGO_URL);
     app.listen(3000, function () {
     console.log("Server is running on port 3000");
 });
