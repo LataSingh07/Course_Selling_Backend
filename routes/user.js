@@ -2,7 +2,8 @@ const { Router } = require("express");
 const bcrypt = require("bcrypt");
 const { UserModel } = require("../db");
 const jsonwebtoken = require("jsonwebtoken");
-const JWT_USER_PASSWORD = "mysecretkeyforuserjwt";
+const  { JWT_USER_PASSWORD } = require("../config");
+const { userAuthMiddleware } = require("../middleware/user");
 
 
 const userRouter = Router();

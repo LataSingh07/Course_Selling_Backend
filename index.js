@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config();
+require('dotenv').config();
 console.log("Environment Variables:", process.env.MONGO_URL, process.env.JWT_ADMIN_PASSWORD, process.env.JWT_USER_PASSWORD);
 
 const {userRouter} = require("./routes/user");

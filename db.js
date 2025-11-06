@@ -22,7 +22,7 @@ const courseSchema = new Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   imageLink: { type: String },
-  createdId: { type: Types.ObjectId, ref: "Admin", required: true },
+  creatorId: { type: Types.ObjectId, ref: "Admin", required: true },
 });
 
 const purchaseSchema = new Schema({

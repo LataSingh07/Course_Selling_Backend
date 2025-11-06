@@ -1,9 +1,11 @@
 const {Router} = require("express");
 const adminRouter = Router();
 const {AdminModel} = require("../db");
+const {CourseModel} = require("../db");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
-const JWT_ADMIN_PASSWORD = "mysecretkeyforadminjwt";
+const  { JWT_ADMIN_PASSWORD } = require("../config");
+const { adminAuthMiddleware } = require("../middleware/admin");
 
 adminRouter.post("/signup", async function (req, res) {
     const { email, firstname, lastname } = req.body;
@@ -39,28 +41,45 @@ adminRouter.post("/login", async function (req, res) {
         }
 })
 adminRouter.post("/courses", adminAuthMiddleware, async function (req, res) {
-    const adminId = req.user.id;
-    const {title, description, price, imageURL} = req.body;
+    const adminId = req.userId;
+
+    const { title, description, imageUrl, price } = req.body;
+
     const course = await CourseModel.create({
-        title,
-        description,
-        price,
-        imageURL,
-        createId: adminId
-    });
+        title: title, 
+        description: description, 
+        imageUrl: imageUrl, 
+        price: price, 
+        creatorId: adminId
+    })
+
     res.json({
-        message: "course created successfully",
+        message: "Course created",
         courseId: course._id
     })
 })
-adminRouter.put("/courses/:courseId", function (req, res) {
+adminRouter.put("/courses/:courseId",adminAuthMiddleware, async function (req, res) {
+    const adminId = req.userId;
+    const {title, description, price, imageURL, courseId} = req.body;
+
+    const course = await CourseModel.updateOne(
+        { _id: courseId,
+         creatorId: adminId 
+        },
+        { title, description, price, imageURL },
+        { new: true }
+    );
     res.json({
-        message: "admin updates course endpoint"
+        message: "admin updates course endpoint",
+        courseId: course._id
     })
 })
-adminRouter.get("/courses", function (req, res) {
+adminRouter.get("/courses",adminAuthMiddleware, async function (req, res) {
+    const adminId = req.user.id;
+    const courses = await CourseModel.find({ creatorId: adminId });
     res.json({
-        message: "admin get courses endpoint"
+        message: "admin get courses endpoint",
+        courses
     })
 })
 
